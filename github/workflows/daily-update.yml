@@ -1,0 +1,22 @@
+name: DevSync Daily Update
+
+on:
+  schedule:
+    - cron: "30 14 * * *" # Runs at 14:30 everyday (change time as needed)
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Make a commit for 23f2003863@ds.study.iitm.ac.in
+        run: |
+          echo "Updated on $(date)" >> update.txt
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add update.txt
+          git commit -m "Automated daily update"
+          git push
